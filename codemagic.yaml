@@ -3,16 +3,18 @@ workflows:
     name: FitPakistan Android APK
     max_build_duration: 60
     instance_type: linux_x2
-    environment:
-      android: latest
     scripts:
+      - name: Check Android build environment
+        script: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT"
+          java -version
+          gradle --version
       - name: Build debug APK
         script: |
           if [ -f ./gradlew ]; then
             chmod +x ./gradlew
             ./gradlew assembleDebug
-          elif [ -f ./gradlew.bat ]; then
-            gradle assembleDebug
           else
             gradle assembleDebug
           fi
